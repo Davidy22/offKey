@@ -1,0 +1,198 @@
+<addDialog>:
+	BoxLayout:
+		orientation: "vertical"
+		BoxLayout:
+			size_hint_y: None
+			height: 35
+			orientation: "horizontal"
+			Label:
+				text: "Pitch"
+			TextInput:
+				id: pitch
+		SelectableGrid:
+			cols: 3
+			id: mode
+		BoxLayout:
+			size_hint_y: None
+			height: 35
+			orientation: "horizontal"
+			Label:
+				text: "Options"
+			TextInput:
+				id: options
+		BoxLayout:
+			size_hint_y: None
+			height: 35
+			orientation: "horizontal"
+			Button:
+				text: "Submit"
+				id: submit
+				on_press: root.submit()
+			Button:
+				text: "Cancel"
+				id: cancel
+				on_press: root.cancel()
+
+<buttonDisplay>:
+    drag_timeout: 10000000
+    drag_distance: 0
+    size_hint: None, None
+	pos: 300, 300
+    drag_rectangle: self.x, self.y, self.width, self.height
+	Label:
+		id: text
+		text: ""
+		color: 0,0,0,1
+	
+	Image:
+		id: image
+		source: "img/key.png"
+		color: 0.1,0.1,0.1,1
+	
+	Image:
+		id: icon
+		source: ""
+		color: 0.1,0.1,0.1,0
+		size_hint: 0.45, 0.45
+
+<mouseDisplay>:
+    drag_timeout: 10000000
+    drag_distance: 0
+    size_hint: None, None
+	pos: 300, 300
+    drag_rectangle: self.x, self.y, self.width, self.height
+	
+	Image:
+		id: image
+		source: "img/mouse.png"
+		color: 0.1,0.1,0.1,1
+	
+<SelectableLabel>:
+	# Draw a background to indicate selection
+	cols: 3
+	canvas.before:
+		Color:
+			rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	Label:
+		id: notes
+		text: ""
+		width:dp(62)
+		size_hint_x: None
+	Label:
+		id: type
+		text: ""
+	Label:
+		id: option
+		text: ""
+<RV>:
+	viewclass: 'SelectableLabel'
+	bar_width: 13
+	spacing: 2
+	scroll_type: ["bars"]
+	SelectableRecycleBoxLayout:
+		default_size: None, dp(35)
+		default_size_hint: 1, None
+		size_hint_y: None
+		height: self.minimum_height
+		orientation: 'vertical'
+		multiselect: False
+		touch_multiselect: False
+		
+		
+<KeyTable>:
+	orientation: "vertical"
+	BoxLayout:
+		size_hint_y: None
+		height: 35
+		orientation: "horizontal"
+		cols: 3
+		background_color: (0.1, 0.1, 1, 1)
+		canvas.before:
+			Color:
+				rgba: (0.2, 0.2, 0.3, 1)
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		Label:
+			text: "Notes"
+			width:dp(62)
+			size_hint_x: None
+		Label:
+			text: "Type"
+		Label:
+			text: "Options"
+	RV:
+		id: dat
+
+<UI>:
+	orientation: "horizontal"
+	BoxLayout:
+		orientation: "vertical"
+		id: control
+		size_hint_x: None
+		width: 250
+		BoxLayout:
+			size_hint_y: None
+			height: dp(45)
+			orientation: "horizontal"
+			Label:
+				text: "Detecting"
+				size_hint_x: None
+				width: dp(82)
+				canvas.before:
+					Color:
+						rgb: 0.2,0.2,0.2
+					Rectangle:
+						pos: self.pos
+						size: self.size
+			Label:
+				id: pitch
+				text: "0"
+				size_hint_x: None
+				width: dp(111)
+				canvas.before:
+					Color:
+						rgba: .5, .5, .5, 1
+					Line:
+						width: 2
+						rectangle: self.x, self.y, self.width, self.height
+			Label:
+				id: note
+				text: ""
+				canvas.before:
+					Color:
+						rgba: .5, .5, .5, 1
+					Line:
+						width: 2
+						rectangle: self.x, self.y, self.width, self.height
+			
+		keyTable:
+			id: bindings
+		BoxLayout:
+			size_hint_y: None
+			height: dp(45)
+			orientation: "horizontal"
+			Button:
+				id: add
+				text: "Add"
+				on_press: root.button_add()
+			Button:
+				id: edit
+				text: "Edit"
+				on_press: root.button_edit()
+			Button:
+				id: remove
+				text: "Remove"
+				on_press: root.button_remove()
+
+	FloatLayout:
+		id: display
+		canvas:
+			Color:
+				rgb: 0,1,0
+			Rectangle:
+				pos: self.pos
+				size: self.size
